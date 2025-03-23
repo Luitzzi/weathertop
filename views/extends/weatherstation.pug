@@ -1,0 +1,80 @@
+//- Detailed information of a weather station
+    Content:
+        - Weather station display: Last measurement & delete button
+        - Table with all measurements
+        - Form to manually add measurement data
+        - Button to automatically add measurement data via openweathermap.org API
+        - Button to delete a measurement
+
+extends ../layout
+
+block title
+    title #{weatherStationInfo.name}
+
+block content
+    div.bg(style="background-color: #1870d0; height: 100vh")
+        div.container-lg
+            h1.ms-3.pt-2.headline Messdaten der Wetterstation: #{weatherStationInfo.name}
+
+        // Weather station display: Last Measurement & delete button
+        include ../includes/weather-station-display
+
+        // Table with all measurements
+        div.container-lg
+            table.table.border.border-dark
+                    thead
+                        tr
+                            th(scope="col") Zeitpunkt
+                            th(scope="col") Wetter
+                            th(scope="col") Temperatur
+                            th(scope="col") Wind
+                            th(scope="col") Luftdruck
+                            th(scope="col")
+                    tbody
+                        each weatherStationMeasurement in weatherStationMeasurements
+                            tr
+                                td #{weatherStationMeasurement.timestamp}
+                                td #{weatherStationMeasurement.weather_code}
+                                td #{weatherStationMeasurement.temperature} °C
+                                td #{weatherStationMeasurement.wind} bft
+                                td #{weatherStationMeasurement.air_pressure} hpa
+                                td
+                                    // Delete Measurement button
+                                    form(action="/weatherStation/delete" method="post")
+                                        input(type="hidden", name="measurement_id", value=weatherStationMeasurement.measurement_id)
+                                        input(type="hidden", name="station_id", value=weatherStationInfo.weather_station_id)
+                                        button.border-0.bg-transparent(type="submit")
+                                            i.bi.bi-x-octagon(id="deleteMeasurementButton")
+
+        // Form to add new measurement data
+        div.container-lg
+            div.glassBlurEffect.p-2
+                h4 Füge Messung hinzu:
+                // Add measurement
+                form(action="/weatherStation/add" method="post")
+                    input(type="hidden", name="station_id", value=weatherStationInfo.weather_station_id)
+
+                    div.d-flex.flex-row.m-2
+                        div.form-group.p-2
+                            label(for="weather_code") Weather code
+                            input.form-control(type="text", id="weather_code", name="weather_code" required)
+                        div.form-group.p-2
+                            label(for="temperature") Temperature
+                            input.form-control(type="text", id="temperature", name="temperature" required)
+                        div.form-group.p-2
+                            label(for="wind") Wind
+                            input.form-control(type="text", id="wind", name="wind" required)
+                        div.form-group.p-2
+                            label(for="wind_Direction") Windrichtung
+                            input.form-control(type="text", id="wind_direction", name="wind_direction" required)
+                        div.form-group.p-2
+                            label(for="air_pressure") Luftdruck
+                            input.form-control(type="text", id="air_pressure", name="air_pressure" required)
+
+                    button.btn.btn-primary.ms-2.mb-2(type="submit") Messung hinzufügen
+
+                // Add automatic measurement
+                form(action="/weatherStation/add/automatic" method="post")
+                    input(type="hidden", name="station_id", value=weatherStationInfo.weather_station_id)
+                    button.btn.btn-warning.ms-2.mb-2(type="submit") Automatische Messung hinzufügen
+

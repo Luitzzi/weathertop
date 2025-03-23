@@ -1,0 +1,59 @@
+//- Dashboard overview:
+    Content:
+        - Overview of weather stations with its last added measurement (include /includes/weather-station-display
+        - Link to the weather station's measurements
+        - Delete weather station button
+        - Add new weather station form
+        - Map displaying all weather stations (leafletjs libary https://leafletjs.com/)
+
+
+extends ../layout
+
+block title
+    title Dashboard
+
+block content
+    div.bg(style="background-color: #1870d0; height: 100vh")
+        div.bg.pb-5(style="background-image: url('/images/blue-sky-image-background.jpg'); background-size: cover;")
+            div.container-lg
+                h1.pt-3.ps-3.headline Dashboard
+
+            // Overview of weather station inkl. link to its measurements & delete button
+            each weatherStationInfo in allWeatherStations
+                include ../includes/weather-station-display
+
+            // Add weather station form
+            div.container-lg
+                div.glassBlurEffect.border.border-dark-subtle.m-2
+                    form(action="/dashboard/add" method="post")
+                        div.row.m-2
+                            div.col.form-group.p-2
+                                label(for="name") Name Wetterstation
+                                input.form-control(type="text", id="name", name="name" required)
+                            div.col.form-group.p-2
+                                label(for="degree_of_latitude") Breitengrad
+                                input.form-control(type="text", id="degree_of_latitude", name="degree_of_latitude" required)
+                            div.col.form-group.p-2
+                                label(for="degree_of_longitude") Längengrad
+                                input.form-control(type="text", id="degree_of_longitude", name="degree_of_longitude" required)
+
+                        button.btn.btn-primary.ms-3.mb-2(type="submit") Submit
+
+            // Map displaying all weather stations
+            div.container-lg
+                div.m-2.border.border-dark(id="map")
+                    script.
+                        let weatherStations = !{JSON.stringify(allWeatherStations)};
+                        let map = L.map('map').setView([weatherStations[0].degree_of_latitude, weatherStations[0].degree_of_longitude], 13);
+
+                        L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                            maxZoom: 19,
+                            attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+                        }).addTo(map);
+
+                        for (let i = 0; i < weatherStations.length; i++) {
+                            L.marker([weatherStations[i].degree_of_latitude, weatherStations[i].degree_of_longitude]).addTo(map)
+                            .bindPopup(`<a href="/weatherStation/${weatherStations[i].weather_station_id}">Wetterstation:<br><span>${weatherStations[i].name}</span></a>`)
+                            .openPopup();
+                        }
+

@@ -1,0 +1,66 @@
+/* Background Image */
+
+/* Glass blur effect */
+.glassBlurEffect {
+    background: rgba(255, 255, 255, 0.28);
+    border: solid black 1px;
+    border-radius: 5px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(7.9px);
+}
+
+/* Headlines */
+.headline {
+    color: orange;
+}
+
+/* Dashboard/ WeatherStation/:id site: Links & event icons -> Turn red on hover */
+#deleteStationIcon {
+    color: orange;
+}
+#deleteStationIcon:hover {
+    color: red;
+    cursor: pointer;
+}
+
+#measurementLink {
+    text-decoration: none;
+}
+#measurementLinkText{
+    color: black;
+}
+#measurementLinkIcon {
+    color: orange;
+}
+#measurementLink:hover .measurementLink {
+    color: red;
+}
+
+/* /weatherStation/:id path: Delete measurement button -> Turn red on hover */
+#deleteMeasurementButton {
+    color: orange;
+}
+#deleteMeasurementButton:hover {
+    color: red;
+}
+
+
+/* Map height and link style */
+#map {
+    height: 400px;
+    border-radius: 5px;
+}
+#map a {
+    color: black;
+    text-decoration: none;
+}
+#map a:hover {
+    color: orange;
+}
+#map span {
+    font-weight: bold;
+    text-decoration: underline;
+}
+
+

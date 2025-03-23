@@ -1,0 +1,37 @@
+//- Registration page
+    Content:
+        - Registration form
+        - Display of opener image otherwise the side would be so empty
+
+extends ../layout
+
+block title
+    title Registration
+
+block content
+    div.container-md
+        div.row.pt-3
+            div.col
+                img(src="/images/weather_Image_Opener.jpg").img-fluid
+                test
+            div.col
+                if registrationError
+                    p.bg-danger-subtle.p-2.rounded-2= registrationError
+
+                form(action="/registration/addUser" method="post")
+                    div.form-group.p-2
+                        label(for="email") E-Mail:
+                        input.form-control(type="email", id="email", name="email" required)
+                    div.form-group.p-2
+                        label(for = "first_name") Vorname:
+                        input.form-control(type="text", id="first_name", name="first_name" required)
+                    div.form-group.p-2
+                        label(for = "surname") Nachname:
+                        input.form-control(type="text", id="surname", name="surname" required)
+                    div.form-group.p-2
+                        label(for = "password") Passwort
+                        input.form-control(type="password", id="password", name="password" required)
+                    div.form-group.p-2
+                        label(for="confirmPassword") Passwort bestätigen
+                        input.form-control(type="password", id="confirmPassword", name="confirmed_password" required)
+                    button.btn.btn-primary.p-2.m-2(type="submit") Submit

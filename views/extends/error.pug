@@ -1,0 +1,12 @@
+//- Error-handling page
+    Catched exceptions:
+
+extends ../layout
+
+block title
+    title Error
+
+block content
+    div.container-md.d-flex.flex-column.align-items-center.mt-5
+        h2.alert.alert-danger.p-3 Error
+        p Error message: #{error}

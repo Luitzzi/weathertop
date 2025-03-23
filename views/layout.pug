@@ -1,0 +1,11 @@
+// Layout file embedding the different content blocks via template inheritance
+    Content:
+        - Included head file: Contains all links to stylesheets & scripts
+        - Included header file: Contains the nav bar
+
+doctype html
+html
+    include includes/head
+    body
+        include includes/header
+        block content

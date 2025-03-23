@@ -1,0 +1,102 @@
+// Weather station display
+    Content:
+        - Station data: name, latitude, longitude
+        - Data of last measurement
+            - Weather
+                - Weathercode in text
+                - Icon of the weather
+            - Temperature
+                - In degree Celsius
+                - Min. and max. values
+                - Icon of the temperature (5 possibilities)
+                - Icon of the temperature trend
+            - Wind
+                - Wind speed in bft
+                - Wind direction -> Also displayed with icon
+                - Min. and max. values
+                - Icon of wind (1 possibility) and wind speed trend
+            - Air pressure
+                - Air pressure in hpa
+                - Min. and max. values
+             -> 3 possibilities for the trends (arrow down, arrow right, arrow up), calculated by last two measurements
+        - Delete button for the weather station inclusive all measurements
+        - Only on the dashboard site: Show measurements link -> /weatherStation/:id site
+
+div.container-lg
+    div.glassBlurEffect.row.p-2.m-2
+        // Station info: name, lon, lat
+        div.col.m-2
+            div.card.text-bg-dark.h-100
+                div.m-3
+                    p.card-title #{weatherStationInfo.name}
+                    p.card-text.m-0 Lon: #{weatherStationInfo.degree_of_longitude}
+                    p.card-text Lat: #{weatherStationInfo.degree_of_latitude}
+
+        // Weather code
+        div.col.m-2
+            div.card.text-bg-dark.h-100
+                div.row.m-2
+                    div.col
+                        p.a.card-title Wetter
+                        p.card-text.m-0 #{weatherStationInfo.weather_text}
+                    div.col.d-flex.flex-column.justify-content-between.align-items-center.w-100
+                        i(class=`bi ${weatherStationInfo.weather_icon}`)
+
+        // Temperature
+        div.col.m-2
+            div.card.text-bg-dark.h-100
+                div.row.m-2
+                    div.col
+                        p.a.card-title Temperatur
+                        p.card-text.m-0 #{weatherStationInfo.temperature} Grad
+                        p.card-text.m-0 Max: #{weatherStationInfo.highest_temperature_value}
+                        p.card-text.m-0 Min: #{weatherStationInfo.lowest_temperature_value}
+                    div.col.d-flex.flex-column.justify-content-between.align-items-center.w-100
+                        i(class=`bi ${weatherStationInfo.temperature_icon}`)
+                        i(class=`bi ${weatherStationInfo.temperature_trend}`)
+
+        // Wind
+        div.col.m-2
+            div.card.text-bg-dark.h-100
+                div.row.m-2
+                    div.col
+                        p.a.card-title Wind
+                        p.card-text.m-0 #{weatherStationInfo.wind} bft
+                        p.card-text.m-0 #{weatherStationInfo.wind_direction_text}
+                        p.card-text.m-0 Max: #{weatherStationInfo.highest_wind_value}
+                        p.card-text.m-0 Min: #{weatherStationInfo.lowest_wind_value}
+                    div.col.d-flex.flex-column.justify-content-between.align-items-center.w-100
+                        i.bi.bi-wind.fs-3
+                        i(class=`bi ${weatherStationInfo.wind_direction_icon}`)
+                        i(class=`bi ${weatherStationInfo.wind_trend}`)
+
+        // Air pressure
+        div.col.m-2
+            div.card.text-bg-dark.h-100
+                div.row.m-2
+                    div.col
+                        p.a.card-title Luftdruck
+                        p.card-text.m-0 #{weatherStationInfo.air_pressure} hpa
+                        p.card-text.m-0 Max: #{weatherStationInfo.highest_air_pressure_value}
+                        p.card-text.m-0 Min: #{weatherStationInfo.lowest_air_pressure_value}
+                    div.col.d-flex.flex-column.justify-content-between.align-items-center.w-100
+                        i.bi.bi-speedometer.fs-3
+                        i(class=`bi ${weatherStationInfo.air_pressure_trend}`)
+
+        div.d-flex.flex-row.justify-content-between.ms-2
+
+            if (isDashboard)
+                a.ms-2(id="measurementLink", href="/weatherStation/" + weatherStationInfo.station_id)
+                    div.d-flex.align-items-center
+                        div.measurementLink(id="measurementLinkText") Messdaten
+                        i.bi.bi-card-list.fs-4.ms-2.measurementLink(id="measurementLinkIcon")
+
+            div.d-flex.flex-row.align-items-center.me-3(id="deleteStationContainer")
+                div Wetterstation löschen
+                form(action="/dashboard/delete" method="post")
+                    input(type="hidden", name="name", value= weatherStationInfo.name)
+                    input(type="hidden", name="station_id", value= weatherStationInfo.station_id)
+                    input(type="hidden", name="weather_code", value= weatherStationInfo.weather_code)
+
+                    button.border-0.bg-transparent(type="submit")
+                        i.bi.bi-trash.deleteStationElements.fs-4(id="deleteStationIcon")
