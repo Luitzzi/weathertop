@@ -13,6 +13,10 @@ Welcome to Weathertop - a robust and user-friendly weather application built wit
 
 ---
 
+![Weathertop gif](/public/images/weathertop.gif)
+
+---
+
 ## Technology Stack
 - **Backend:** Node.js and Express for a scalable and efficient server-side application.
 - **Database:** PostgreSQL for robust and reliable data storage and management.
