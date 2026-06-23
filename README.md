@@ -1,4 +1,6 @@
-
+![JS Badge](https://shields.io/badge/JavaScript-F7DF1E?logo=JavaScript&logoColor=000&style=flat-square)
+![CSS Badge](https://img.shields.io/badge/-CSS-000?logo=CSS)
+![Postgres Badge](https://img.shields.io/badge/PostgreSQL-316192?logo=postgresql&logoColor=white)
 ![Weathertop banner](/public/images/banner-weathertop.png)
 Welcome to Weathertop - a robust and user-friendly weather application built with Node.js, Express, and PostgreSQL.
 
